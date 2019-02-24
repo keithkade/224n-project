@@ -1,0 +1,3 @@
+[submodule "squad-starter"]
+	path = squad-starter
+	url = https://github.com/keithkade/squad-fork
