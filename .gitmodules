@@ -1,3 +1,6 @@
 [submodule "squad-starter"]
 	path = squad-starter
 	url = https://github.com/keithkade/squad-fork
+[submodule "BERT"]
+	path = BERT
+	url = https://github.com/keithkade/BERT-fork
