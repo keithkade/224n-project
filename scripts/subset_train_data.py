@@ -9,7 +9,7 @@ import math
 from pprint import pprint
 
 subset = {}
-data_size = 1000
+data_size = 5000
 count = 0
 
 questions_per_article = math.ceil(data_size / 442)
