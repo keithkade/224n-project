@@ -9,8 +9,11 @@ import math
 from pprint import pprint
 
 subset = {}
-data_size = 5000
+data_size = 1000
 count = 0
+
+impossible_questions = math.ceil(data_size / 2)
+impossible_questions_count = 0
 
 questions_per_article = math.ceil(data_size / 442)
 
@@ -54,12 +57,25 @@ with open('squad-starter/data/train-v2.0.json') as file:
 
             new_paragraph = {}
             new_paragraph['context'] = paragraph['context']
-            new_paragraph['qas'] = [paragraph['qas'][0]]
+
+            # get a 50/50 impossibel question split
+            if impossible_questions_count < impossible_questions:
+                added_impossible = False
+                for question in paragraph['qas']:
+                    if question['is_impossible']:
+                        new_paragraph['qas'] = [question]
+                        impossible_questions_count += 1
+                        added_impossible = True
+                        break
+                if not added_impossible:
+                    new_paragraph['qas'] = [paragraph['qas'][0]]
+            else:
+                new_paragraph['qas'] = [paragraph['qas'][0]]
+
             new_article['paragraphs'].append(new_paragraph)
 
             total_questions_added += 1
             questions_added_for_article += 1
-
 
         subset['data'].append(new_article)
 
@@ -67,6 +83,7 @@ with open('squad-starter/data/train-v2.0.json') as file:
         for paragraph in article['paragraphs']:
             for qas in paragraph['qas']:
                 count += 1
+
     print(count)
 
     with open('squad-starter/data/train-v2.0-subset.json', 'w') as outfile:
